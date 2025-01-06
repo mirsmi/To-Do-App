@@ -23,9 +23,9 @@ public class ToDoAppController {
         view = new ToDoAppView();
 
         //add listeners to buttons
-        view.getAddButton().addActionListener(_ -> view.showAddTaskDialog(this));
-        view.getMarkCompletedButton().addActionListener(_ -> markTaskAsCompleted(view.getTable().getSelectedRow()));
-        view.getDeleteButton().addActionListener(_ -> deleteTask(view.getTable().getSelectedRow()));
+        view.getAddButton().addActionListener(e -> view.showAddTaskDialog(this));
+        view.getMarkCompletedButton().addActionListener(e -> markTaskAsCompleted(view.getTable().getSelectedRow()));
+        view.getDeleteButton().addActionListener(e -> deleteTask(view.getTable().getSelectedRow()));
 
         //load tasks initially
         loadTasks();

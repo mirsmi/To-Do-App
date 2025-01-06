@@ -30,13 +30,14 @@ public class TaskManager {
 
     /**
      * Saves the list of tasks to a file
+     * @return true if the tasks were successfully saved, false otherwise
      */
-    public void saveTasks() {
+    public boolean saveTasks() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(tasks); //write the tasks list to the file
+            return true;
         } catch (IOException e) {
-            System.out.println("Failed to save tasks: " + e.getMessage());
-            e.printStackTrace();
+            return false; //return false if an IOException occurs
         }
     }
 
