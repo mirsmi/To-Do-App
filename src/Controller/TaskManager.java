@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class TaskManager {
     private final List<Task> tasks = new ArrayList<>(); //list to store tasks
-    private final String filePath = "todolist.txt"; //file path for task persistence
+    private final String filePath = "todolist.txt"; //file path
 
     /**
      * Loads the list of tasks from a file
@@ -37,7 +37,9 @@ public class TaskManager {
             oos.writeObject(tasks); //write the tasks list to the file
             return true;
         } catch (IOException e) {
-            return false; //return false if an IOException occurs
+            System.err.println("Failed to save tasks: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -51,25 +53,52 @@ public class TaskManager {
 
     /**
      * Marks a task as completed based on its index in the list
-     * @param index The index of the task to be marked as completed
+     * @param index index of the task to be marked as completed
+     * @return true if task is marked as complete
      */
-    public void markTaskAsCompleted(int index) {
-        tasks.get(index).setCompleted(true); //update the completed status of the task
+    public boolean markTaskAsCompleted(int index) {
+        if (index < 0 || index >= tasks.size()) {
+            return false;
+        }
+        Task task = tasks.get(index);
+
+        if (task != null) {
+            task.setCompleted(true); //update the completed status of the task
+            return true;
+        }
+        return false;
     }
 
     /**
      * Adds a new task to the list
-     * @param task The task to be added
+     * @param task task to be added
+     * @return true if task is added
      */
-    public void addTask(Task task) {
-        tasks.add(task); //add the task to the list
+    public boolean addTask(Task task) {
+        if (task == null) {
+            return false; //task is null, cannot be added
+        }
+        if (task.getTitle() == null || task.getTitle().isBlank()) {
+            return false;
+        }
+        
+        tasks.add(task); //add task to the list
+        return true;
     }
 
     /**
      * Deletes a task from the list based on its index
      * @param index The index of the task to be deleted
+     * @return true if task is deleted
      */
-    public void deleteTask(int index) {
-        tasks.remove(index); //remove the task from the list
+    public boolean deleteTask(int index) {
+        if (index < 0 || index >= tasks.size()) {
+            return false; //index is invalid
+        }
+
+        //remove the task from  the list
+        tasks.remove(index);
+        return true;
     }
+
 }

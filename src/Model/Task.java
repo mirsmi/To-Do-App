@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 
 /**
- * Class representing a task
+ * Class that represents a task
  */
 public class Task implements Serializable {
     private final String title;
